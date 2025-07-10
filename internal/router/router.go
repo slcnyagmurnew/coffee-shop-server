@@ -2,7 +2,7 @@ package router
 
 import (
 	"coffee-server/internal/handler"
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 )
 
 // Router create routing group for coffee application
@@ -18,6 +18,8 @@ func Router() *fiber.App {
 	v1.Get("/", handler.Index)
 	// add healthcheck
 	v1.Get("/health", handler.Health)
+	// add coffee
+	v1.Post("/coffee", handler.OrderCoffee)
 
 	return app
 }
