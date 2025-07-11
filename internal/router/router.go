@@ -6,7 +6,7 @@ import (
 )
 
 // Router create routing group for coffee application
-func Router() *fiber.App {
+func Router(orderHandler *handler.OrderHandler) *fiber.App {
 	// init fiber app
 	app := fiber.New()
 	// init api group
@@ -15,11 +15,13 @@ func Router() *fiber.App {
 	v1 := api.Group("/v1")
 
 	// add index
-	v1.Get("/", handler.Index)
+	v1.Get("/", orderHandler.Index)
 	// add healthcheck
-	v1.Get("/health", handler.Health)
-	// add coffee
-	v1.Post("/coffee", handler.OrderCoffee)
+	v1.Get("/health", orderHandler.Health)
+	// create order
+	v1.Post("/order", orderHandler.CreateOrder)
+	// get existing order
+	v1.Get("/order/:orderId", orderHandler.GetOrder)
 
 	return app
 }
